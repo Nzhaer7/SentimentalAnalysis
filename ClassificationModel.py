@@ -13,7 +13,7 @@ data=pd.read_csv("data.csv")
 
 cv=CountVectorizer()
 
-data['']=data[''].map({'':,'':})
+data['']=data[''].map({'':,'':,'':})
 
 data=data.fillna(0)
 
