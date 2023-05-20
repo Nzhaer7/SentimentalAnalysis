@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ClassificationModel.py" />
     <Compile Include="PrepDataset.py" />
     <Compile Include="ScrapData.py" />
   </ItemGroup>
