@@ -1,16 +1,21 @@
-import requests
+from selenium import webdriver
 from bs4 import BeautifulSoup
+import pandas as pd
 import csv
+import time
 
+url=""
 
-URL = ""
+driver = webdriver.Chrome("./chromedriver.exe")
 
-page = requests.get(URL)
+content=driver.page_source
 
-soup = BeautifulSoup(page.content, "html.parser")
+soup=BeautifulSoup(content)
 
-context = soup.find(id="")
+df=pd.DataFrame()
 
-data=context.text.strip()
+df.to_csv('data.csv', index=False, encoding='utf-8')
 
+data=[]
 
+driver.get(url)
