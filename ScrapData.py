@@ -1,33 +1,39 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
-import csv
 import time
 
-url=""
+class Scrap():
 
-driver = webdriver.Chrome("./chromedriver.exe")
+    def ScrapData(self, url, item1, item2, item3, item4):
+        self.url=url
 
-Data1=[]
+        self.driver = webdriver.Chrome("chromedriver.exe")
 
-Data2=[]
+        self.driver.get(self.url)
 
-Data3=[]
+        time.sleep(2)
 
-driver.get(url)
+        self.Data1=[]
 
-content=driver.page_source
+        self.Data2=[]
 
-soup=BeautifulSoup(content)
+        self.Data3=[]
 
-for i in soup.findAll('i', href=True, attrs={'class':''}):
-    data1=i.find('div', attrs={'class':''})
-    data2=i.find('div', attrs={'class':''})
-    data3=i.find('div', attrs={'class':''})
-    Data1.append(data1.text)
-    Data2.append(data2.text)
-    Data3.append(data3.text)
+        self.driver.get(self.url)
 
-df=pd.DataFrame({'coulmn_name':Data1,'coulmn_name':Data2,'column_name':Data3})
+        self.content=self.driver.page_source
 
-df.to_csv('data.csv', index=False, encoding='utf-8')
+        self.soup=BeautifulSoup(self.content)
+
+        for i in soup.findAll('i', href=True, attrs={'class':item1}):
+            self.data1=i.find('div', attrs={'class':item2})
+            self.data2=i.find('div', attrs={'class':item3})
+            self.data3=i.find('div', attrs={'class':item4})
+            self.Data1.append(self.data1.text)
+            self.Data2.append(self.data2.text)
+            self.Data3.append(self.data3.text)
+
+        self.df=pd.DataFrame({'coulmn_name':self.Data1,'coulmn_name':self.Data2,'column_name':self.Data3})
+
+        self.df.to_csv('data.csv', index=False, encoding='utf-8')
