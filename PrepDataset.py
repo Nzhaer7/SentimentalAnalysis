@@ -1,30 +1,34 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
 
 class Prep():
-    def PrepData(self, path):
-        self.Path=path
+    def PrepData(self, Rdata):
+        self.raw_data=Rdata
 
-        def read_data():
-            self.data=pd.read_csv(self.Path, 
-                             encoding='utf-8', 
-                             sep=',', 
-                             skipinitialspace=True, 
-                             index_col=-1,
-                             header=0,
-                             )
+        self.data = pd.read_csv("data.csv")
 
-            return self.data
+        self.cv = CountVectorizer()
 
-        def features_labels(self, data):
-            self.arr = np.array(data, dtype=np.float)
-            self.X,self.y=arr[:,:-1], arr[:,-1]
-            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2)
-            self.scaler = StandardScaler()
-            self.scaler.fit(self.X_train)
-            self.X_train = self.scaler.transform(self.X_train)
-            self.X_test = self.scaler.transform(self.X_test)
+        self.data[''] = self.data[''].map({'':,'':,'':})
 
-            return self.X_train, self.X_test, self.y_train, self.y_test
+        self.data = self.data.fillna(0)
+
+        self.x = data['']
+        self.y = data['']
+
+        self.x = self.x.replace([np.inf, -np.inf], np.nan, inplace=True)
+        self.x = self.x.dropna()
+        self.x = self.x.reset_index()
+
+        self.y = self.y.replace([np.inf, -np.inf], np.nan)
+        self.y = self.y.dropna()
+        self.y = self.y.reset_index()
+
+        self.x = self.cv.fit_transform(self.data[''].apply(lambda x: np.str_(self.x)))
+
+        self.x_train, self.x_test, self.y_train, self.y_test=train_test_split(self.x, self.y, test_size=0.2)
+
+        return self.x_train, self.x_test, self.y_train, self.y_test
