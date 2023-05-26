@@ -4,11 +4,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 class Prep():
-    def PrepData():
-        pah=""
+    def PrepData(self, path):
+        self.Path=path
 
         def read_data():
-            data=pd.read_csv(path, 
+            self.data=pd.read_csv(self.Path, 
                              encoding='utf-8', 
                              sep=',', 
                              skipinitialspace=True, 
@@ -16,15 +16,15 @@ class Prep():
                              header=0,
                              )
 
-            return data
+            return self.data
 
-        def features_labels(data):
-            arr = np.array(data, dtype=np.float)
-            X.y=arr[:,:-1], arr[:,-1]
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-            scaler = StandardScaler()
-            scaler.fit(X_train)
-            X_train = scaler.transform(X_train)
-            X_test = scaler.transform(X_test)
+        def features_labels(self, data):
+            self.arr = np.array(data, dtype=np.float)
+            self.X,self.y=arr[:,:-1], arr[:,-1]
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2)
+            self.scaler = StandardScaler()
+            self.scaler.fit(self.X_train)
+            self.X_train = self.scaler.transform(self.X_train)
+            self.X_test = self.scaler.transform(self.X_test)
 
-            return X_train, X_test, y_train, y_test
+            return self.X_train, self.X_test, self.y_train, self.y_test

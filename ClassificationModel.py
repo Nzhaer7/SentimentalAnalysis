@@ -30,28 +30,28 @@ class cModel():
         self.y = self.y.dropna()
         self.y = self.y.reset_index()
 
-        self.x = self.cv.fit_transform(self.data[''].apply(lambda self.x: np.str_(self.x)))
+        self.x = self.cv.fit_transform(self.data[''].apply(lambda x: np.str_(self.x)))
 
         self.x_train, self.x_test, self.y_train, self.y_test=train_test_split(self.x, self.y, test_size=0.2)
 
-        model=MultinomialNB()
+        self.model=MultinomialNB()
 
-        model.fit(x_train, y_train)
+        self.model.fit(self.x_train, self.y_train)
 
-        result=model.score(x_test, y_test)
+        self.result=self.model.score(self.x_test, self.y_test)
 
-        result=result*100
+        self.result=self.result*100
 
-        print(result)
+        print(self.result)
 
-        predictions = model.predict(x_test)
+        self.predictions = self.model.predict(self.x_test)
 
-        cm = confusion_matrix(y_test, predictions, labels=model.classes_)
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm,
-                                      display_labels=model.classes_)
-        disp.plot()
+        self.cm = confusion_matrix(self.y_test, self.predictions, labels=self.model.classes_)
+        self.disp = ConfusionMatrixDisplay(confusion_matrix=self.cm,
+                                      display_labels=self.model.classes_)
+        self.disp.plot()
         plt.show()
 
-        pickle.dump(model, open("tsf.pkl","wb"))
+        pickle.dump(self.model, open("tsf.pkl","wb"))
 
-        pickle.dump(cv, open("vectorizer.pkl","wb"))
+        pickle.dump(self.cv, open("vectorizer.pkl","wb"))
